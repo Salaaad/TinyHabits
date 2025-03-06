@@ -10,8 +10,8 @@ function showContextMenu(e, emoji) {
   currentEmoji = emoji;
 
   // Positionner le menu contextuel où l'utilisateur a cliqué
-  contextMenu.style.left = `${e.clientX}px`;
-  contextMenu.style.top = `${e.clientY}px`;
+  contextMenu.style.left = `${e.clientX || e.touches[0].clientX}px`; // Utilisation de touches pour le mobile
+  contextMenu.style.top = `${e.clientY || e.touches[0].clientY}px`; // Utilisation de touches pour le mobile
 
   // Afficher le menu contextuel
   contextMenu.style.display = 'block';
@@ -69,9 +69,10 @@ function createEmoji(event) {
 
   // Rendre l'emoji déplaçable
   emojiElement.addEventListener('mousedown', startDrag);
+  emojiElement.addEventListener('touchstart', startDragTouch); // Événement pour les appareils tactiles
 }
 
-// Déplacer l'emoji
+// Déplacer l'emoji avec la souris
 function startDrag(e) {
   isDragging = true;
   draggedEmoji = e.target;
@@ -93,6 +94,32 @@ function startDrag(e) {
 
   document.addEventListener('mousemove', drag);
   document.addEventListener('mouseup', stopDrag);
+}
+
+// Déplacer l'emoji avec le toucher
+function startDragTouch(e) {
+  isDragging = true;
+  draggedEmoji = e.target;
+
+  const touch = e.touches[0]; // Premier doigt pour le déplacement
+  const offsetX = touch.clientX - draggedEmoji.getBoundingClientRect().left;
+  const offsetY = touch.clientY - draggedEmoji.getBoundingClientRect().top;
+
+  function dragTouch(e) {
+    const touch = e.touches[0]; // Premier doigt pour le déplacement
+    draggedEmoji.style.left = `${touch.clientX - offsetX}px`;
+    draggedEmoji.style.top = `${touch.clientY - offsetY}px`;
+  }
+
+  function stopDragTouch() {
+    isDragging = false;
+    draggedEmoji = null;
+    document.removeEventListener('touchmove', dragTouch);
+    document.removeEventListener('touchend', stopDragTouch);
+  }
+
+  document.addEventListener('touchmove', dragTouch);
+  document.addEventListener('touchend', stopDragTouch);
 }
 
 // Sélectionner quel emoji utiliser à partir du menu
