@@ -1,0 +1,172 @@
+/* Réinitialisation des marges et du padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+  
+body, html {
+    height: 100%;
+    width: 100%;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Fond mignon avec des couleurs douces comme une prairie */
+.container {
+    background: linear-gradient(135deg, #d4f7d4, #b5e6b5); /* Dégradé pastel vert prairie */
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden; /* Assure que les éléments qui sortent ne s'affichent pas */
+}
+
+/* Bulles animées */
+.container::before {
+    content: "";
+    position: absolute;
+    top: -50px;
+    left: -50px;
+    width: 300px;
+    height: 300px;
+    background-color: #b5e6b5;
+    border-radius: 50%;
+    opacity: 0.5;
+    animation: moveBubbles 10s infinite alternate;
+}
+
+.container::after {
+    content: "";
+    position: absolute;
+    bottom: -50px;
+    right: -50px;
+    width: 300px;
+    height: 300px;
+    background-color: #d4f7d4;
+    border-radius: 50%;
+    opacity: 0.5;
+    animation: moveBubbles 10s infinite alternate-reverse;
+}
+
+/* Animation des bulles (formes rondes) qui flottent */
+@keyframes moveBubbles {
+    0% {
+        transform: translate(0, 0);
+    }
+    100% {
+        transform: translate(150px, 150px);
+    }
+}
+
+/* Menu déroulant */
+.dropdown {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 10; /* Priorité élevée pour le dropdown */
+}
+
+.dropbtn {
+    background-color: #66bb6a; /* Couleur verte */
+    color: white;
+    padding: 12px; /* Plus de padding pour un bouton rond */
+    font-size: 1.2rem;
+    border: none;
+    cursor: pointer;
+    border-radius: 50%; /* Forme ronde */
+    width: 25px; /* Largeur fixe pour un bouton rond */
+    height: 25px; /* Hauteur fixe pour un bouton rond */
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centrer l'emoji dans le bouton */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Ajouter une ombre douce pour un effet mignon */
+    transition: transform 0.2s ease; /* Animation lors du survol */
+}
+
+.dropbtn:hover {
+    background-color: #81c784; /* Un vert plus clair au survol */
+    transform: scale(1.1); /* Légère augmentation de la taille au survol */
+}
+
+.dropbtn:focus {
+    outline: none; /* Retirer l'outline au focus */
+}
+
+
+/* Liste déroulante */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 50px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 20; /* Priorité élevée pour le contenu du menu déroulant */
+    border-radius: 5px;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 1rem;
+    border-radius: 5px;
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+/* Afficher le menu déroulant lorsqu'on survole */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Style des emojis ajoutés à la carte */
+.emoji {
+    font-size: 50px;  /* Taille initiale ajustée à 50px pour cohérence avec le JS */
+    cursor: pointer;
+    position: absolute;
+    user-select: none; /* Empêche la sélection du texte */
+    transition: transform 0.2s ease; /* Transition pour les mouvements */
+}
+
+/* Style du menu contextuel */
+.context-menu {
+    position: absolute;
+    display: none; /* Cacher le menu par défaut */
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 5px; /* Réduit le padding pour un menu plus compact */
+    border-radius: 5px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    width: 70px; /* Limite la largeur du menu */
+}
+
+/* Option du menu contextuel */
+.context-menu a {
+    display: block;
+    padding: 3px 8px; /* Réduit le padding autour des liens */
+    text-decoration: none;
+    color: #333;
+    cursor: pointer;
+    font-size: 0.9rem; /* Réduit la taille de la police */
+}
+
+.context-menu a:hover {
+    background-color: #f0f0f0;
+}
+
+/* Si tu as un champ de saisie dans le menu contextuel */
+.context-menu input {
+    width: 100%; /* Occupe toute la largeur du menu (ou ajuste à ta convenance) */
+    padding: 5px; /* Ajuste la taille du champ d'écriture */
+    font-size: 0.9rem; /* Réduit la taille de la police dans le champ */
+    margin-top: 5px; /* Espacement au-dessus du champ */
+    border: 1px solid #ddd; /* Bordure discrète */
+    border-radius: 3px; /* Coins arrondis */
+}
+
+.context-menu input:focus {
+    border-color: #66bb6a; /* Change la couleur de la bordure lorsque le champ est focus */
+}
